@@ -8,6 +8,89 @@ package
 		{
 		}
 		
+		public var integers:Array;
+		private var complete:Boolean = false;
+		
+		public function inputData( data:Array ):Boolean
+		{
+			integers = [];
+			for( var i:int = 0; i < data.length; i++)
+			{
+				integers[i] = [];
+				for( var j:int = 0; j < data[i].length; j++ )
+				{
+					integers[i][j] = data[i][j];
+				}
+			}
+			
+			return isLegalMap( integers );
+		}
+		
+		private function is_or_not( y:int, x:int):Boolean
+		{
+			var m:int= int( y/9);  
+			var n:int= int(y%9);  
+			trace("m : " + m + ",  n: " + n);
+			var m1:int = int (m / 3) * 3;  
+			var n1:int = int( n / 3) * 3 ; 
+			var row:int;
+			var col:int;
+			for( row=0;row!=9;row++)   
+				if(integers[m][row]==x){
+					trace("error row: row = " + row);
+					return false;
+				}
+			for(col=0;col!=9;col++) 
+				if(integers[col][n]==x){
+					trace("error col = " + col);
+					return false;
+				}
+			for ( row=m1;row!=m1+3;row++)  
+				for ( col=n1;col!=n1+3;col++)
+					if (integers[row][col] == x){
+						trace("error row: " + row + ", col:" + col);
+						return false;
+					}
+			
+			return true;
+		}
+		
+		public function digui( n:int):void
+		{
+			if (n > 80)
+			{
+				complete=true;
+				return;
+			}
+			var i:int;
+			trace("[ x : "+int(n/9)+", y : "+int(n%9)+"] = "+ integers[int(n/9)][int(n%9)] );
+			if (integers[int(n/9)][int(n%9)] != 0) //找为零的空格
+				digui(n+1);
+			else  
+			{
+				var vals = getFirstEmptyVals( integers, new Point(int(n/9), int(n%9)));
+			for each( i in vals) 
+			{
+				if ( is_or_not(n,i) )//能填则填入
+				{
+					trace("set pos: I:" + (n/9) + "J:" + (n%9));
+					integers[int(n/9)][int(n%9)] = i;
+					digui(n+1); ///继续填空
+					if (complete) {
+						trace(" is complete");
+						return;
+					}
+					integers[int(n/9)][int(n%9)] = 0; //递归返回时如果n+1空格1-9都不能填，则将n清零重填
+				}
+				else
+				{
+					trace(" cannot be here : i = "  + i);
+				}
+			}
+			}
+		}
+		
+		
 		//m,n分别为行和列，a代表待解决的矩阵，空白要填0，b为最终结果，初始化为0
 		//使用方法：Cal(0, 0, a, b);这样b里面就是最后的答案了
 		public static function Cal( m:int,  n:int, a:Array, b:Array):void
@@ -58,142 +141,8 @@ package
 			}
 		}
 		
-		public static function sudo_solve(array:Array, length:int):Array {  
-			// i for rows, j for cols  
-			var i:int;
-			var j:int;  
-			
-			
-			var testVal:int;  
-			var tempArray:Array = [];//[LENGTH][LENGTH];  
-			var LENGTH:int = 9;
-			
-			//dump the array to tempArray  
-			for (i = 0; i < LENGTH; i++) {  
-				tempArray[i] = [];
-				for (j = 0; j < LENGTH; j++)  
-					tempArray[i][j] = array[i][j];  
-			}  
-			
-			
-			i = length / LENGTH;  
-			j = length % LENGTH;  
-			
-			
-//			printf("array[%d][%d] = %d", i, j, array[i][j]);  
-			if (array[i][j] != 0) {  
-				// there is a val in the slot array[i][j]  
-				if (length == 80)  {
-//					printSudo(tempArray);  
-					return tempArray;
-				}
-				else{  
-					sudo_solve(tempArray, length + 1);  
-				}
-			} else {  
-				// there is no val in the slot array[i][j]  
-				for (testVal = 1; testVal <= LENGTH; testVal++) {  
-					if (checkSudo(tempArray, i, j, testVal) != 0) {  
-						
-						tempArray[i][j] = testVal;  
-						
-						if (length == 80)  {
-//							printSudo(tempArray);  
-							return tempArray;
-						}
-						else   {
-							sudo_solve(tempArray, length + 1);  
-						}
-						
-						tempArray[i][j] = 0;  
-					}  
-				}  
-			}  
-			return null;
-		} 
-		
-		private static function checkSudo(array:Array, i:int, j:int, testVal:int):int {  
-			var row:int;
-			var col:int; 
-			var LENGTH:int = 9;
-			
-			// fixed to col j, check for the rows  
-			for (row = 0; row < LENGTH; row++) {  
-				if (array[row][j] == testVal)  
-					return 0;  
-			}  
-			
-			
-			// fixed to row i, check for cols  
-			for (col = 0; col < LENGTH; col++) {  
-				if (array[i][col] == testVal)  
-					return 0;  
-			}  
-			
-			
-			//check for the sub-square  
-			var row_subSquare:int = int( (i / 3) * 3 );  
-			var col_subSquare:int  = int( (j / 3) * 3 );  
-			
-			
-			for (row = row_subSquare; row < row_subSquare + 3; row++) {  
-				for (col = col_subSquare; col < col_subSquare + 3; col++) {  
-					if (array[row][col] == testVal)  
-						return 0;  
-				}  
-			}  
-			
-			
-			return 1;      
-		} 
-		
-		
-		public static function cal( map:Array ):Array
-		{
-			if( ! isLegalMap(map) )
-			{
-				return null;
-			}
-			
-			if( isFullMap(map) )
-			{
-				return map;
-			}
-			
-			var pos:Point = getFirstEmptyPos( map );
-//			var obj:Object = getFirstEmptyPos(map);
-			
-			var vals:Array = getFirstEmptyVals( map , pos);
-			
-			if( vals == null || vals.length == 0 )
-			{
-				return null;
-			}
-			
-			trace("pos:" + pos.toString() + ",, vals: " + vals.toString());
-			
-			var cloneMap:Array;
-			
-			for( var i:int = 0; i < vals.length; i++ )
-			{
-				cloneMap = cloneMat( map );
-				cloneMap[pos.x][pos.y] = vals[i];
-				if( cal(cloneMap) != null )
-				{
-					return cloneMap;
-				}
-				else
-				{
-//					map = cloneMat( cloneMap );
-//					map[pos.x][pos.y] = 0;
-					return null;
-				}
-			}
-//			map[pos.x][pos.y] = 0;
-			return null;
-		}
-		
-		private static function getFirstEmptyVals( map:Array, pos:Point ):Array
+
+		private function getFirstEmptyVals( map:Array, pos:Point ):Array
 		{
 			
 			var all:Array = getSerialList();
@@ -267,7 +216,7 @@ package
 			return true;
 		}
 		
-		private static function isLegalMap( map:Array ):Boolean
+		private function isLegalMap( map:Array ):Boolean
 		{
 			if( map == null || map.length == 0 )
 			{
@@ -306,7 +255,7 @@ package
 			return true;
 		}
 		
-		private static function isLegalMat( map:Array, startI:int, startJ:int ):Boolean
+		private function isLegalMat( map:Array, startI:int, startJ:int ):Boolean
 		{
 			var all:Array = getSerialList();
 			for(var i:int = startI; i < startI + 3; i++)
@@ -327,7 +276,7 @@ package
 			return true;
 		}
 		
-		private static function isLegalH( map:Array, i:int):Boolean
+		private  function isLegalH( map:Array, i:int):Boolean
 		{
 			var all:Array = getSerialList();
 			for( var j:int = 0; j < 9; j++ )
@@ -344,7 +293,7 @@ package
 			return true;
 		}
 		
-		private static function isLegalV( map:Array, j:int):Boolean
+		private  function isLegalV( map:Array, j:int):Boolean
 		{
 			var all:Array = getSerialList();
 			for( var i:int = 0; i < 9; i++ )
@@ -361,7 +310,7 @@ package
 			return true;
 		}
 		
-		private static function delFromList( arr:Array, target:int ):Boolean
+		private function delFromList( arr:Array, target:int ):Boolean
 		{
 			for(var i:int = 0; i < arr.length; i++ )
 			{

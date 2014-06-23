@@ -179,13 +179,25 @@ package
 //				}
 //			}
 			
-			var done:Array = AI.cal( mapQuestion );
+			var ai:AI = new AI();
+			if( ai.inputData( mapQuestion ) == false )
+			{
+				GameHelper.showDlg( this, "Error Map" );
+				return ;
+			}
+			
+			
+			ai.digui( 0 );
+			var done:Array = ai.integers;
+			
+//			var done:Array = AI.cal( mapQuestion );
 //			AI.Cal( 0, 0 , mapQuestion, done );
 			if( done == null || done.length == 0 )
 			{
 				GameHelper.showDlg(this, "Map Error");
 				return ;
 			}
+			trace("done map");
 			showDoneMat( done );
 			
 			showMatFix( matItems );

@@ -489,3 +489,120 @@ Binding(COMMAND+SHIFT+F12,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,cocoa,system)
+!SESSION 2014-06-23 22:27:42.263 -----------------------------------------------
+eclipse.buildId=I20100608-0911
+java.version=1.6.0_65
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86, WS=cocoa, NL=zh_CN
+Framework arguments:  -keyring /Users/mokhong/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86 -keyring /Users/mokhong/.eclipse_keyring -consoleLog -showlocation
+
+!ENTRY org.eclipse.ui 2 0 2014-06-23 22:27:44.340
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2014-06-23 22:27:44.340
+!MESSAGE Commands should really have a category: plug-in='com.qnx.flashbuilder.multiplatform.qnx.ui', id='com.qnx.flashbuilder.multiplatform.qnx.ui.commands.OpenInfoCenter', categoryId='com.qnx.flashbuilder.multiplatform.qnx.ui.commands.category.help'
+
+!ENTRY org.eclipse.core.net 1 0 2014-06-23 22:27:45.551
+!MESSAGE System property http.nonProxyHosts has been set to local„ÄÅ169.254/16|*.local„ÄÅ169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY com.adobe.flexbuilder.ui 4 1 2014-06-23 22:27:50.766
+!MESSAGE Product = null version = 460 edition = prem
+
+!ENTRY org.eclipse.jface 2 0 2014-06-23 22:31:56.201
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2014-06-23 22:31:56.201
+!MESSAGE A conflict occurred for COMMAND+SHIFT+F12:
+Binding(COMMAND+SHIFT+F12,
+	ParameterizedCommand(Command(org.eclipse.mylyn.tasks.ui.command.searchForTask,Search Repository for Task,
+		,
+		Category(org.eclipse.ui.category.navigate,浏览,null,true),
+		org.eclipse.mylyn.internal.tasks.ui.search.SearchTaskHandler,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(COMMAND+SHIFT+F12,
+	ParameterizedCommand(Command(com.adobe.flexbuilder.flashbridge.export.publish.movie,发布影片,
+		在 Flash Professional 中发布,
+		Category(com.adobe.flexbuilder.flashbridge.flashProCommands,Flash Professional,null,true),
+		,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,cocoa,system)
+!SESSION 2014-06-23 22:32:10.952 -----------------------------------------------
+eclipse.buildId=I20100608-0911
+java.version=1.6.0_65
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86, WS=cocoa, NL=en_US
+Framework arguments:  -keyring /Users/mokhong/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86 -keyring /Users/mokhong/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.ui 2 0 2014-06-23 22:32:15.489
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2014-06-23 22:32:15.489
+!MESSAGE Commands should really have a category: plug-in='com.qnx.flashbuilder.multiplatform.qnx.ui', id='com.qnx.flashbuilder.multiplatform.qnx.ui.commands.OpenInfoCenter', categoryId='com.qnx.flashbuilder.multiplatform.qnx.ui.commands.category.help'
+
+!ENTRY org.eclipse.core.net 1 0 2014-06-23 22:32:16.573
+!MESSAGE System property http.nonProxyHosts has been set to local„ÄÅ169.254/16|*.local„ÄÅ169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY com.adobe.flexbuilder.ui 4 1 2014-06-23 22:32:23.204
+!MESSAGE Product = null version = 460 edition = prem
+
+!ENTRY org.eclipse.jface 2 0 2014-06-23 22:33:41.870
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2014-06-23 22:33:41.870
+!MESSAGE A conflict occurred for COMMAND+SHIFT+F12:
+Binding(COMMAND+SHIFT+F12,
+	ParameterizedCommand(Command(org.eclipse.mylyn.tasks.ui.command.searchForTask,Search Repository for Task,
+		,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.mylyn.internal.tasks.ui.search.SearchTaskHandler,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(COMMAND+SHIFT+F12,
+	ParameterizedCommand(Command(com.adobe.flexbuilder.flashbridge.export.publish.movie,Publish Movie,
+		Publish in Flash Professional,
+		Category(com.adobe.flexbuilder.flashbridge.flashProCommands,&Flash Professional,null,true),
+		,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,cocoa,system)
+!SESSION 2014-06-24 00:14:26.924 -----------------------------------------------
+eclipse.buildId=I20100608-0911
+java.version=1.6.0_65
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86, WS=cocoa, NL=zh_CN
+Framework arguments:  -keyring /Users/mokhong/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86 -keyring /Users/mokhong/.eclipse_keyring -consoleLog -showlocation
+
+!ENTRY org.eclipse.ui 2 0 2014-06-24 00:14:33.445
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2014-06-24 00:14:33.445
+!MESSAGE Commands should really have a category: plug-in='com.qnx.flashbuilder.multiplatform.qnx.ui', id='com.qnx.flashbuilder.multiplatform.qnx.ui.commands.OpenInfoCenter', categoryId='com.qnx.flashbuilder.multiplatform.qnx.ui.commands.category.help'
+
+!ENTRY org.eclipse.core.net 1 0 2014-06-24 00:14:34.678
+!MESSAGE System property http.nonProxyHosts has been set to local„ÄÅ169.254/16|*.local„ÄÅ169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY com.adobe.flexbuilder.ui 4 1 2014-06-24 00:14:39.333
+!MESSAGE Product = null version = 460 edition = prem
+
+!ENTRY org.eclipse.jface 2 0 2014-06-24 00:14:54.844
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2014-06-24 00:14:54.844
+!MESSAGE A conflict occurred for COMMAND+SHIFT+F12:
+Binding(COMMAND+SHIFT+F12,
+	ParameterizedCommand(Command(org.eclipse.mylyn.tasks.ui.command.searchForTask,Search Repository for Task,
+		,
+		Category(org.eclipse.ui.category.navigate,浏览,null,true),
+		org.eclipse.mylyn.internal.tasks.ui.search.SearchTaskHandler,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(COMMAND+SHIFT+F12,
+	ParameterizedCommand(Command(com.adobe.flexbuilder.flashbridge.export.publish.movie,发布影片,
+		在 Flash Professional 中发布,
+		Category(com.adobe.flexbuilder.flashbridge.flashProCommands,Flash Professional,null,true),
+		,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,cocoa,system)

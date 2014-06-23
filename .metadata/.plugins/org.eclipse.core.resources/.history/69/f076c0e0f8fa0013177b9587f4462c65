@@ -1,0 +1,89 @@
+package
+{
+	import flash.geom.Point;
+
+	public class AI
+	{
+		public function AI()
+		{
+		}
+		
+		public var integers:Array;
+		private var complete:Boolean = false;
+		
+		public function inputData( data:Array ):void
+		{
+			integers = [];
+			for( var i:int = 0; i < data.length; i++)
+			{
+				integers[i] = [];
+				for( var j:int = 0; j < data[i].length; j++ )
+				{
+					integers[i][j] = data[i][j];
+				}
+			}
+		}
+		
+		private function is_or_not( y:int, x:int):Boolean
+		{
+			var m:int= int( y/9);  
+			var n:int= int(y%9);  
+			trace("m : " + m + ",  n: " + n);
+			var m1:int = int (m / 3) * 3;  
+			var n1:int = int( n / 3) * 3 ; 
+			var row:int;
+			var col:int;
+			for( row=0;row!=9;row++)   
+				if(integers[m][row]==x){
+					trace("error row: row = " + row);
+					return false;
+				}
+			for(col=0;col!=9;col++) 
+				if(integers[col][n]==x){
+					trace("error col = " + col);
+					return false;
+				}
+			for ( row=m1;row!=m1+3;row++)  
+				for ( col=n1;col!=n1+3;col++)
+					if (integers[row][col] == x){
+						trace("error row: " + row + ", col:" + col);
+						return false;
+					}
+			
+			return true;
+		}
+		
+		public function digui( n:int):void
+		{
+			if (n > 80)
+			{
+				complete=true;
+				return;
+			}
+			var i:int;
+			trace("[ x : "+int(n/9)+", y : "+int(n%9)+"] = "+ integers[int(n/9)][int(n%9)] );
+			if (integers[int(n/9)][int(n%9)] != 0) //找为零的空格
+				digui(n+1);
+			else  
+			{
+			for (i=1;i<=9;i++) 
+			{
+				if ( is_or_not(n, i) )//能填则填入
+				{
+					trace("set pos: I:" + (n/9) + "J:" + (n%9));
+					integers[int(n/9)][int(n%9)] = i;
+					digui(n+1); ///继续填空
+					if (complete) {
+						trace(" is complete");
+						return;
+					}
+					integers[int(n/9)][int(n%9)] = 0; //递归返回时如果n+1空格1-9都不能填，则将n清零重填
+				}
+				else
+				{
+					trace(" cannot be here : i = "  + i);
+				}
+			}
+			}
+		}
+		
