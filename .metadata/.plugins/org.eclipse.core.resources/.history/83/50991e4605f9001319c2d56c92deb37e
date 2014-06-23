@@ -1,0 +1,303 @@
+package
+{
+	import flash.display.MovieClip;
+	import flash.display.SimpleButton;
+	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.geom.Point;
+	import flash.text.TextField;
+	
+	
+	public class ShuDu extends Sprite
+	{
+		public static const MAX_H:int = 9;
+		
+		public static const MAX_V:int = 9;
+		
+		//res
+		private var matItems:Array = [];
+		private var mcNoClick:MovieClip;
+		
+		//data
+		private var tl:StepTimeline;
+		
+		private var mapGener:MapGenerator;
+		
+		private var mapQuestion:Array;
+		
+		public function ShuDu()
+		{
+			this.addEventListener(Event.ADDED_TO_STAGE, onATS );
+			
+			mapGener = new MapGenerator(  );
+		}
+		
+		protected function onATS(event:Event):void
+		{
+			this.removeEventListener(Event.ADDED_TO_STAGE, onATS );
+			
+			tl = new StepTimeline( setData );
+			
+			parseRes();
+			
+			
+		}
+		
+		private function createMapByLevel( level:int ):void
+		{
+			mapQuestion = mapGener.generateSudoku( level );
+			
+			resetMap();
+		}
+		
+		private function resetMap():void
+		{
+			var item:Item;
+			for( var i:int = 0; i < MAX_H; i++ )
+			{
+				for(var j:int = 0 ;j < MAX_V ;j++)
+				{
+					item = matItems[i][j];
+					if( mapQuestion[i][j] != 0 )
+					{
+						item.setFix( mapQuestion[i][j] );
+					}
+					else
+					{
+						item.init();
+					}
+				}
+			}
+		}
+		
+		private function parseRes():void{
+			for( var i:int = 0; i < MAX_H; i++)
+			{
+				matItems[i] = [];
+				for( var j:int = 0; j < MAX_V; j++)
+				{
+					matItems[i][j] = new Item(new Point(i, j),  this.getChildByName("item" + i + "_" + j ) as MovieClip );
+					Item(matItems[i][j]).addClkEve( onClickItem );
+					
+					setChooseItem( i, j, false );
+				}
+			}
+			
+			mcNoClick = this.getChildByName("_mcNoClick") as MovieClip;
+			mcNoClick.visible = false;
+			
+			addBtnClk( "_btnFirst", onClickFirst );
+			addBtnClk("_btnPrev", onClickPrev );
+			addBtnClk( "_btnNext", onClickNext );
+			addBtnClk( "_btnLast", onClickLast );
+			addBtnClk( "_btnClearTl", onClickTl );
+			
+			this.addEventListener(MouseEvent.CLICK, onClick );
+		}
+		
+		private function onClick(evt:MouseEvent):void
+		{
+			var clkName:String = evt.target.name;
+			if( clkName.indexOf("btnLevel") != -1 )
+			{
+				var clkIndex:int = GameHelper.getIntFromStr( clkName );
+				
+				createMapByLevel( clkIndex + 1 );
+			}
+			
+			switch( clkName )
+			{
+				case "btnReset":
+					resetMap();
+					break;
+			}
+		}
+		
+		private function setChooseItem( i:int,  j:int, choose:Boolean ):void
+		{
+			var item:Item = matItems[i][j];
+			item.setBg( choose ? Item.LABEL_FOCUS : Item.LABEL_RELEASE );
+		}
+		
+		private function onClickTl():void
+		{
+			tl.clearAll();
+		}
+		
+		private function onClickFirst():void
+		{
+			tl.getFirst();
+		}
+		
+		private function onClickPrev():void
+		{
+			tl.getPrevStep();
+		}
+		
+		private function onClickNext():void
+		{
+			tl.getNextStep();
+		}
+		
+		private function onClickLast():void
+		{
+			tl.getLast();
+		}
+		
+		private function addBtnClk( btnName:String, onClickFunc:Function = null ):void
+		{
+			var btn:SimpleButton = this.getChildByName( btnName ) as SimpleButton;
+			btn.addEventListener(MouseEvent.CLICK, function(evt:MouseEvent):void{
+				if( onClickFunc != null){
+					onClickFunc();
+				}
+			});
+		}
+		
+		protected function onClickItem(event:MouseEvent):void
+		{
+			var item:MovieClip = event.currentTarget as MovieClip;
+			var index:int = GameHelper.getFirstIntIndex( item.name );
+			var nums:String = item.name.substr( index );
+			var numsArr:Array = nums.split("_");
+			
+			var pos:Point = new Point( numsArr[0], numsArr[1] );
+			
+			var itemData:Item = matItems[pos.x][pos.y];
+			if( itemData.isFix )
+			{
+				return ;
+			}
+			
+			setChooseItem( pos.x, pos.y, true );
+			
+			trace("click pos: " + pos);
+			var oldStepData:StepInfo = getData( pos );
+			this.mcNoClick.visible = true;
+			var panel:ChoosePanel = new ChoosePanel( oldStepData, confirmChoose, function():void{
+				setChooseItem( pos.x, pos.y, false );
+				mcNoClick.visible = false;
+			} );
+			panel.alpha = 0.7;
+			this.addChild( panel );
+		}
+		
+		private function getData( pos:Point ):StepInfo
+		{
+//			var item:MovieClip = items[pos.x][pos.y];
+			
+//			var strMust:String = (item.getChildByName("_txtMust") as TextField).text;
+//			var must:int = strMust == "" ? 0 : int(strMust);
+//			
+//			var strMaybe:String = (item.getChildByName("_txtMaybe") as TextField).text;
+//			var maybe:Array = strMaybe.split(",");
+			
+			var item:Item = matItems[pos.x][pos.y];
+			return item.data;
+			
+//			return new StepInfo( pos, must, maybe);
+		}
+		
+		private function confirmChoose( oldStepData:StepInfo, step:StepInfo ):void
+		{
+			tl.pushStep( oldStepData );
+			tl.pushStep( step );
+			
+			setData( step );
+		}
+		
+		private function setData( step:StepInfo ):void
+		{
+			step.display();
+			
+			var item:Item = matItems[step.itemPos.x][step.itemPos.y];
+			item.setData( step );
+			
+//			var item:MovieClip = items[step.itemPos.x][step.itemPos.y];
+//			(item.getChildByName("_txtMust") as TextField).text = step.must == 0 ? "" : step.must.toString();
+//			(item.getChildByName("_txtMaybe") as TextField).text = step.maybe.length == 0 ? "" : step.maybe.toString();
+		}
+		
+
+		private function checkDone():void
+		{
+			if( ! isFull() )
+			{
+				return ;
+			}
+		}
+		
+		private function isCorrect():Boolean
+		{
+			
+		}
+		
+		private function isThisPosCorrect( i:int, j:int ):Boolean
+		{
+			if( isHLineCorrect(i,j) == false )
+			{
+				return false;
+			}
+			if( isVLineCorrect(i,j) == false )
+			{
+				return false;
+			}
+		}
+		
+		private function isHLineCorrect( i:int , j:int):Boolean
+		{
+			var itemTarget:Item = matItems[i][j];
+			var item:Item;
+			for( var jj:int = 0 ; jj < MAX_H; jj++)
+			{
+				if( jj != j )
+				{
+					item = matItems[i][jj];
+					if( item.data.must == itemTarget.data.must )
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		
+		private function isVLineCorrect( i:int , j:int):Boolean
+		{
+			var itemTarget:Item = matItems[i][j];
+			var item:Item;
+			for( var ii:int = 0 ; ii < MAX_V; ii++)
+			{
+				if( ii != i )
+				{
+					item = matItems[ii][j];
+					if( item.data.must == itemTarget.data.must )
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		
+		private function isFull():Boolean
+		{
+			var item:Item;
+			for( var i:int = 0; i < MAX_H; i++)
+			{
+				for(var j:int = 0; j < MAX_V; j++)
+				{
+					item = matItems[i][j];
+					if( item.data.must == 0 )
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		
+		
+	}
+}

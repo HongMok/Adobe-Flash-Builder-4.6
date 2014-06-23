@@ -1,0 +1,9 @@
+package
+{
+	public class MapGenerator
+	{
+		public function MapGenerator()
+		{
+		}
+	}
+}

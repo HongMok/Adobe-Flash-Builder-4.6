@@ -1,0 +1,77 @@
+package
+{
+	import flash.geom.Point;
+
+	public class StepInfo
+	{
+		public static const MAX_MAYBE_NUM:int = 3;
+		
+		private var _itemPos:Point;
+		
+		private var _must:int;
+		
+		private var _maybe:Array;
+		
+		public function StepInfo( itemPos:Point, must:int, maybe:Array )
+		{
+			this._itemPos = itemPos;
+			this._must = must;
+			this._maybe = maybe;
+		}
+		
+		public function copy():StepInfo{
+			return new StepInfo( this.itemPos, this.must, this.maybe );
+		}
+		
+		public function get must():int
+		{
+			return _must;
+		}
+
+		public function set must(value:int):void
+		{
+			_must = value;
+		}
+
+		public function get maybe():Array
+		{
+			return _maybe;
+		}
+
+		public function set maybe(value:Array):void
+		{
+			_maybe = value;
+		}
+		
+		public function addMaybe( num:int ):void{
+			if( maybe.length == 0 ){
+				maybe[0] = num;
+				return ;
+			}
+			else
+			{
+				for( var i:int = 0; i < maybe.length && i < 3; i++){
+					if( i < maybe.length -1 ){
+						maybe[i] = maybe[i+1];
+					}
+					else
+					{
+						maybe[i] = num;
+					}
+				}
+			}
+		}
+
+		public function get itemPos():Point
+		{
+			return _itemPos;
+		}
+
+		public function set itemPos(value:Point):void
+		{
+			_itemPos = value;
+		}
+
+
+	}
+}

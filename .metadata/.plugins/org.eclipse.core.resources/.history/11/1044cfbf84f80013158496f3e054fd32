@@ -1,0 +1,14 @@
+package
+{
+	public class StepInfo
+	{
+		private var _must:int;
+		
+		private var _maybe:Array;
+		
+		public function StepInfo( var must:int, var maybe:Array )
+		{
+			this._must = mus
+		}
+	}
+}

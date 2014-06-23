@@ -1,0 +1,26 @@
+package
+{
+	public class StepInfo
+	{
+		private var _must:int;
+		
+		private var _maybe:Array;
+		
+		public function StepInfo( must:int, maybe:Array )
+		{
+			this._must = must;
+			this._maybe = maybe;
+		}
+		
+		public function get maybe():Array
+		{
+			return _maybe;
+		}
+
+		public function set maybe(value:Array):void
+		{
+			_maybe = value;
+		}
+
+	}
+}

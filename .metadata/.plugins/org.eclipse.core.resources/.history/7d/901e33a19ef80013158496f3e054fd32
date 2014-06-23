@@ -1,0 +1,54 @@
+package
+{
+	public class StepInfo
+	{
+		private var _itemIndex:int;
+		
+		private var _must:int;
+		
+		private var _maybe:Array;
+		
+		public function StepInfo( itemIndex:int, must:int, maybe:Array )
+		{
+			this._itemIndex = itemIndex;
+			this._must = must;
+			this._maybe = maybe;
+		}
+		
+		public function copy():StepInfo{
+			return new StepInfo( this.itemIndex, this.must, this.maybe );
+		}
+		
+		public function get must():int
+		{
+			return _must;
+		}
+
+		public function set must(value:int):void
+		{
+			_must = value;
+		}
+
+		public function get maybe():Array
+		{
+			return _maybe;
+		}
+
+		public function set maybe(value:Array):void
+		{
+			_maybe = value;
+		}
+
+		public function get itemIndex():int
+		{
+			return _itemIndex;
+		}
+
+		public function set itemIndex(value:int):void
+		{
+			_itemIndex = value;
+		}
+
+
+	}
+}

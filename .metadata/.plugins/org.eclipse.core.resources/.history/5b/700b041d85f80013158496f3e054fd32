@@ -1,0 +1,9 @@
+package
+{
+	public class StepTimeline
+	{
+		public function StepTimeline()
+		{
+		}
+	}
+}

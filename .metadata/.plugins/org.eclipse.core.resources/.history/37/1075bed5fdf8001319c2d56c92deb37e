@@ -1,0 +1,29 @@
+package
+{
+	import flash.display.MovieClip;
+	import flash.geom.Point;
+	import flash.text.TextField;
+
+	public class Item
+	{
+		private var view:MovieClip;
+		
+		private var mcBg:MovieClip;
+		private static const LABEL_RELEASE:int = 1;
+		private static const LABEL_FOCUS:int = 2;
+		private static const LABEL_FIX:int = 3;
+		
+		private var txtMust:TextField;
+		
+		private var txtMaybe:TextField;
+		
+		private var data:StepInfo;
+		
+		private var pos:Point;
+		
+		
+		public function Item()
+		{
+		}
+	}
+}

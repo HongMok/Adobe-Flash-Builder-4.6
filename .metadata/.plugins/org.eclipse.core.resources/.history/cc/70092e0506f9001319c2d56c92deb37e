@@ -1,0 +1,9 @@
+package
+{
+	public class MessagePanel
+	{
+		public function MessagePanel()
+		{
+		}
+	}
+}

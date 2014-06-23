@@ -1,0 +1,22 @@
+package
+{
+	import flash.display.SimpleButton;
+	import flash.display.Sprite;
+	import flash.events.MouseEvent;
+	import flash.text.TextField;
+
+	public class MessagePanel extends Sprite
+	{
+		public function MessagePanel( msg:String )
+		{
+			(this.getChildByName("_txtMsg") as TextField).text = msg;
+			
+			(this.getChildByName("btnOK") as SimpleButton).addEventListener(MouseEvent.CLICK, function(evt:MouseEvent):void{
+				if( this.parent != null )
+				{
+					this.parent.removeChild( this );
+				}
+			});
+		}
+	}
+}

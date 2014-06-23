@@ -1,0 +1,45 @@
+package
+{
+	import flash.display.MovieClip;
+	import flash.display.Sprite;
+	import flash.events.Event;
+
+	public class ChoosePanel extends Sprite
+	{
+		//res
+		private var mclMust:Array = [];
+		private var mclMaybe:Array = [];
+		
+		//data
+		private var step:StepInfo;
+		
+		public function ChoosePanel( step:StepInfo )
+		{
+			this.step = step;
+			this.addEventListener(Event.ADDED_TO_STAGE, onATS );
+		}
+		
+		protected function onATS(event:Event):void
+		{
+			this.addEventListener(Event.ADDED_TO_STAGE, onATS );
+			
+			parseRes();
+		}
+		
+		private function parseRes():void{
+			for( var i:int = 0; i < 9; i++ ){
+				mclMust[i] = this.getChildByName("must" + i ) as MovieClip;
+				mclMaybe[i] = this.getChildByName("maybe" + i ) as MovieClip;
+				
+				MovieClip(mclMaybe[i]).buttonMode = true;
+				MovieClip(mclMust[i]).buttonMode = true;
+			}
+		}
+		
+		private function dispose():void{
+			if( this.parent != null ){
+				this.parent.removeChild( this );
+			}
+		}
+	}
+}

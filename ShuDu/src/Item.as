@@ -1,0 +1,91 @@
+package
+{
+	import flash.display.MovieClip;
+	import flash.events.MouseEvent;
+	import flash.geom.Point;
+	import flash.text.TextField;
+
+	public class Item
+	{
+		private var view:MovieClip;
+		
+		private var mcBg:MovieClip;
+		public static const LABEL_RELEASE:int = 1;
+		public static const LABEL_FOCUS:int = 2;
+		public static const LABEL_FIX:int = 3;
+		
+		public var isFix:Boolean;
+		
+		private var txtMust:TextField;
+		
+		private var txtMaybe:TextField;
+		
+		public var data:StepInfo;
+		
+		public var pos:Point;
+		
+		
+		public function Item( pos:Point, view:MovieClip )
+		{
+			this.pos = pos;
+			this.view = view;
+			this.view.buttonMode = true;
+			
+			parseRes();
+			
+			init();
+		}
+		
+		public function init():void
+		{
+			setData( new StepInfo( this.pos, 0, []) );
+			
+			setBg( LABEL_RELEASE );
+		}
+		
+		public function addClkEve( clkFunc:Function ):void
+		{
+			this.view.addEventListener(MouseEvent.CLICK, clkFunc);
+		}
+		
+		public function setFix( must:int ):void
+		{
+			setData( new StepInfo(this.pos, must, []));
+			isFix = true;
+			
+			setBg( LABEL_FIX );
+		}
+		
+		public function setData( step:StepInfo ):void
+		{
+			isFix = false;
+			this.mcBg.gotoAndStop( LABEL_RELEASE );
+			data = step;
+			setMust( data.must );
+			setMaybe( data.maybe );
+		}
+		
+		private function setMust( must:int ):void
+		{
+			txtMust.text = must == 0 ? "" : must.toString();
+		}
+		
+		private function setMaybe( maybe:Array ):void
+		{
+			txtMaybe.text = ( maybe == null ) ?  "" : maybe.toString();
+		}
+		
+		public function setBg( label:int ):void
+		{
+			this.mcBg.gotoAndStop( label );
+		}
+		
+		private function parseRes():void
+		{
+			mcBg = this.view.getChildByName("_bg") as MovieClip;
+			
+			txtMust = this.view.getChildByName("_txtMust") as TextField;
+			txtMaybe = this.view.getChildByName("_txtMaybe") as TextField;
+		}
+	}
+}
